@@ -1,0 +1,16 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = input("Copie e cole a url: ").strip()
+
+if not url.startswith('http://') and not url.startswith('https://'):
+    url = 'http://' + url
+try:
+    response = requests.get(url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        print("Título da página:", soup.title.string)
+    else:
+        print("Erro, status code:", response.status_code)
+except requests.exceptions.RequestException as e:
+    print("Erro:", e)
